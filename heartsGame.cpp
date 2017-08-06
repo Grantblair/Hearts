@@ -5,6 +5,7 @@
 
 using namespace std;
 
+void rand_cards();
 void assign_decks();
 void sort_deck(string []);
 
@@ -26,14 +27,15 @@ string card_names[4][13] = {{"2 heart", "3 heart", "4 heart", "5 heart", "6 hear
 						{"2 club", "3 club", "4 club", "5 club", "6 club", "7 club", "8 club", "9 club", "10 club", "jack club", "queen club", "king club", "ace club"},
 						{"2 spade", "3 spade", "4 spade", "5 spade", "6 spade", "7 spade", "8 spade", "9 spade", "10 spade", "jack spade", "queen spade", "king spade", "ace spade"}};
 
+//declare arrays for randomization of cards
+string card_name_assign[1];
+int cards_assign[1];						
+
 //declare player name
 string p1_name = "player1";
 string p2_name = "player2";
 string p3_name = "player3";
 string p4_name = "player4";
-
-//declare array size
-
 
 //declare player's deck
 int p1_deck_value[13];
@@ -46,8 +48,6 @@ string p2_deck[13];
 string p3_deck[13];
 string p4_deck[13];
 
-string decks[4] = {p1_deck, p2_deck, p3_deck, p4_deck};
-
 //declare sorting array
 string hearts_cards[0];
 string dimonds_cards[0];
@@ -56,6 +56,7 @@ string spades_cards[0];
 
 int main()
 {
+	rand_cards();
 	assign_decks();
 	//sort_deck(p1_deck);
 	for (int x = 0; x < 13; x++)
@@ -63,57 +64,46 @@ int main()
 	cout << endl << "player 2" << endl;
 	for (int z = 0; z < 13; z++)
 		cout << p2_deck[z] << endl;
+	return 0;
+}
+
+void rand_cards()
+{			
+	//deal decks		
+	for (int i = 0; i < 4; i++)
+	{
+		for (int l = 0; l < 13; l++ )
+		{
+			int rand_suit = rand() % 4;
+			int rand_card = rand() % 13;
+			card_name_assign[0] = card_names[i][l];
+			cards_assign[0] = cards[i][l];
+			cards[i][l] = cards[rand_suit][rand_card];
+			card_names[i][l] = card_names[rand_suit][rand_card];
+			card_names[rand_suit][rand_card] = card_name_assign[0];
+			cards[rand_suit][rand_card] = cards_assign[0];
+		}
+	}
 }
 
 void assign_decks()
-{			
-	//deal player1's deck			
-	int i = 0;						//counter
-	int a;							//deck checker	
-	while (i < 13)
+{
+	for (int i = 0; i < 13; i++)
 	{
-		a = 0;
-		int rand_suit = rand() % 4;
-		int rand_card = rand() % 13;
-		p1_deck_value[i] = cards[rand_suit][rand_card];
-		p1_deck[i] = card_names[rand_suit][rand_card];
-		for (int x = 0; x < i; x++)
-		{
-			if (p1_deck_value[i] == p1_deck_value[x])
-				a++;
-		}
-		if (a > 0)
-			continue;
-		i++;
+		p1_deck[i] = card_names[0][i];
 	}
-
-	//deals player2's deck
-	int y = 0;							//counter
-	int c;								//deck checker
-	while (y < 13)
+	for (int x = 0; x < 13; x++)
 	{
-		c = 0;
-		int rand_suit = rand() % 4;
-		int rand_card = rand() % 13;
-		p2_deck_value[y] = cards[rand_suit][rand_card];
-		p2_deck[y] = card_names[rand_suit][rand_card];
-		for (int x = 0; x < y; x++)
-		{
-			if (p2_deck[y] == p2_deck[x])
-				c++;
-		}
-		for (int x = 0; x < 13; x++)
-		{
-			if (p2_deck[y] == p1_deck[x])
-				c++;
-		}
-		if (c > 0)
-			continue;
-		y++;
+		p2_deck[x] = card_names[1][x];
 	}
-
-	//deal player3's deck
-
+	for (int y = 0; y < 13; y++)
+	{
+		p3_deck[y] = card_names[2][y];
+	}
+	for (int z = 0; z < 13; z++)
+	{
+		p4_deck[z] = card_names[3][z];
+	}
 }
 
 void sort_deck(string deck[])
