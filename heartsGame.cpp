@@ -69,7 +69,8 @@ int main()
 
 void rand_cards()
 {			
-	//deal decks		
+	//deal decks
+	srand(time(NULL));		
 	for (int i = 0; i < 4; i++)
 	{
 		for (int l = 0; l < 13; l++ )
